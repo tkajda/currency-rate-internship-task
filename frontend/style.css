@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%;
+}
+
+label, input {
+    position: relative;
+}
+
+label::after {
+    content: '' attr(currency);
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    display: block;
+}
+
+input {
+    width: 200px;
+}
+
+img {
+    border: 1px solid gray;
+    border-radius: 4px;
+    position: relative;
+    top: 4.5px;
+    left:35px;
+    z-index: 999;
+}
