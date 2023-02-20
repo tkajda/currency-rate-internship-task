@@ -7,7 +7,6 @@ const gbpField = document.getElementById('gbp-field')
 
 let currentRate = 0;
 
-
 window.onload = async () => {
     const response = await fetch(url, {
         method: 'GET',
@@ -15,16 +14,14 @@ window.onload = async () => {
             'Content-Type': 'application/json'
         },
     }).then(res => res.json())
+    console.log(response);
     currentRate = response; 
-    // currentRateDisplay.innerText += response != undefined ? response : 'NaN';
     currentRateDisplay.innerHTML = response != undefined ? '1 GBP = ' + response + ' PLN' : 'Cannot find rate';
-    
-    console.log('Page Loaded');
 }
 
 const updateOtherValue = (which) => {
     if (which === 'pln-field') {
-        gbpField.value = Math.round(plnField.value * currentRate * 100) / 100;
+        gbpField.value = Math.round(plnField.value / currentRate * 100) / 100;
     } else if (which === 'gbp-field') {
         plnField.value = Math.round(gbpField.value * currentRate * 100) / 100;
     }
