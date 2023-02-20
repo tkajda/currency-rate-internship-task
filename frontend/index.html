@@ -9,25 +9,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>GBP-PLN</h1>
     <div class="container">
         <div class="row">
-            <p>You send</p>
+            <div>You send</div>
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg/1200px-Flag_of_the_United_Kingdom_%281-2%29.svg.png" alt="Image" class="icon"
                 width="24"
                 height="15">
             <label currency="GBP">
-                <input>
+                <input type="number" step="0.01" id="gbp-field">
             </label>
         </div>
         <div class="row">
-            <p>You receive</p>
+            <div>They receive</div>
             <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/800px-Flag_of_Poland.svg.png" alt="Image" class="icon"
                 width="24"
                 height="15">
             <label currency="PLN">
-                <input type = "text">
+                <input type="number" step="0.01" id="pln-field">
             </label>
+        </div>
+        <div class="row" id="row-2">
+            <b id="current-rate-display"></b>
         </div>
     </div>
 </body>
