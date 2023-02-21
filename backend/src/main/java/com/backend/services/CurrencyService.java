@@ -16,13 +16,14 @@ public class CurrencyService {
         connection.setRequestMethod("GET");
         connection.connect();
         switch (connection.getResponseCode()) {
-            case 200:
-            case 201:
+            case 200, 201 -> {
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String string = br.lines().collect(Collectors.joining());
-
                 return new JSONObject(string).getJSONArray("rates").getJSONObject(0).getDouble("mid");
+            }
+            default -> {
+                return 0;
+            }
         }
-        return 0;
     }
 }

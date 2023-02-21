@@ -1,34 +1,46 @@
 const url = 'http://localhost:8080/api/rate'
 
-const currentRateDisplay = document.getElementById('current-rate-display');
+const plnGbpRateDisplay = document.getElementById('current-rate-display');
 
 const plnField = document.getElementById('pln-field')
 const gbpField = document.getElementById('gbp-field')
 
-let currentRate = 0;
+let plnGbpRate = 0;
 
-window.onload = async () => {
+const updateOtherValue = (which) => {
+    if (which === 'from-pln') {
+        gbpField.value = Math.round(plnField.value / plnGbpRate * 100) / 100;
+    } else if (which === 'from-gbp') {
+        plnField.value = Math.round(gbpField.value * plnGbpRate * 100) / 100;
+    }
+}
+
+const getRate = async () => {
     const response = await fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         },
-    }).then(res => res.json())
-    console.log(response);
-    currentRate = response; 
-    currentRateDisplay.innerHTML = response != undefined ? '1 GBP = ' + response + ' PLN' : 'Cannot find rate';
+    }).then(res => res.json());
+
+    plnGbpRate = response; 
+    plnGbpRateDisplay.innerHTML = response != undefined ? '1 GBP = ' + response + ' PLN' : 'Cannot find rate';
 }
 
-const updateOtherValue = (which) => {
-    if (which === 'pln-field') {
-        gbpField.value = Math.round(plnField.value / currentRate * 100) / 100;
-    } else if (which === 'gbp-field') {
-        plnField.value = Math.round(gbpField.value * currentRate * 100) / 100;
-    }
+let timeout;
+
+const debounce = (mode) => {
+  clearTimeout(timeout);
+
+  timeout = setTimeout(() => {
+    getRate();
+    updateOtherValue(mode)
+  }, 750);
 }
 
+gbpField.addEventListener('input', () => debounce('from-gbp'));
+plnField.addEventListener('input', () => debounce('from-pln'));
 
-gbpField.addEventListener("input", () => updateOtherValue('gbp-field'));
-plnField.addEventListener("input", () => updateOtherValue('pln-field'));
-
-
+window.onload = async () => {
+    getRate();
+}
