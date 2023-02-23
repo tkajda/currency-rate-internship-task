@@ -35,7 +35,7 @@ public class CurrencyService {
         }
     }
 
-    public double getCurrentGbpRate() throws IOException, JSONException {
+    private double getCurrentGbpRate() throws IOException, JSONException {
         URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/a/gbp/?format=json");
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
         connection.setRequestMethod("GET");
