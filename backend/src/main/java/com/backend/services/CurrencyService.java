@@ -1,14 +1,39 @@
 package com.backend.services;
 
+import lombok.Getter;
+import lombok.extern.java.Log;
 import org.json.*;
+import org.springframework.scheduling.annotation.*;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.*;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 @Service
+@EnableScheduling
+@Log
+@Getter
 public class CurrencyService {
+
+    private double plnGbpRate = 0;
+
+    @Scheduled(fixedDelay = 300_000)
+    @Async
+    public void retrieveData() {
+        try {
+            double tmp = getCurrentGbpRate();
+            if (tmp < 0) {
+                log.log(Level.WARNING, "Failed getting data: " + tmp);
+                return;
+            }
+            plnGbpRate = tmp;
+            log.log(Level.INFO, "Exchange rate: " + getCurrentGbpRate());
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     public double getCurrentGbpRate() throws IOException, JSONException {
         URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/a/gbp/?format=json");
@@ -22,7 +47,7 @@ public class CurrencyService {
                 return new JSONObject(string).getJSONArray("rates").getJSONObject(0).getDouble("mid");
             }
             default -> {
-                return 0;
+                return -1;
             }
         }
     }

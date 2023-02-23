@@ -3,11 +3,9 @@ package com.backend.controllers;
 
 import com.backend.services.CurrencyService;
 import com.google.gson.Gson;
-import org.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
@@ -23,10 +21,8 @@ public class CurrencyController {
     @CrossOrigin
     @RequestMapping(value = "/rate", method = RequestMethod.GET)
     public ResponseEntity<String> getCurrentRate() {
-        try {
-            return ResponseEntity.ok().body(gson.toJson(currencyService.getCurrentGbpRate()));
-        } catch (IOException | JSONException ex) {
-            ex.printStackTrace();
+        if (currencyService.getPlnGbpRate() > 0) {
+            return ResponseEntity.ok().body(gson.toJson(currencyService.getPlnGbpRate()));
         }
         return ResponseEntity.status(404).body(gson.toJson("not found"));
     }
