@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GBP-PLN</title>
-    <script src="script.js" defer></script>
+    <script type="module" src="script.js" defer></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
                 width="24"
                 height="15">
             <label currency="GBP">
-                <input type="number" min="0" step="0.01" id="gbp-field">
+                <input min="0" step="0.01" id="gbp-field">
             </label>
         </div>
         <div class="row">
@@ -25,7 +25,7 @@
                 width="24"
                 height="15">
             <label currency="PLN">
-                <input type="number" min="0" step="0.01" id="pln-field">
+                <input min="0" step="0.01" id="pln-field">
             </label>
         </div>
         <div id="loader"></div>
