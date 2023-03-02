@@ -16,7 +16,6 @@ const hasOnlyDigits = (string) => {
 
 const isCorrectData = (mode) => {
   const fieldValue = mode === 'from-pln' ? plnField.value : gbpField.value;
-
   if (fieldValue.length > 0 && (fieldValue < 0 || !hasOnlyDigits(fieldValue))) {
     alert('Please enter a positive number');
     plnField.value = '';
@@ -57,10 +56,10 @@ const fetchRate = async (mode) => {
     return;
   });
 
-  const data = response != undefined ? await response.json() : undefined;
+  const data = response !== undefined ? await response.json() : undefined;
   plnGbpRate = data;
 
-  plnGbpRateDisplay.innerHTML = data != undefined ? '1 GBP = ' + data + ' PLN' : 'Cannot fetch exchange rate';
+  plnGbpRateDisplay.innerHTML = data !== undefined ? '1 GBP = ' + data + ' PLN' : 'Cannot fetch exchange rate';
   updateValue(mode, calculateValue(mode));
 }
 

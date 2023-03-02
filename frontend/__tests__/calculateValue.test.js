@@ -1,13 +1,13 @@
+document.body.innerHTML = 
+  '<input min="0" step="0.01" id="gbp-field">' +
+  '<input min="0" step="0.01" id="pln-field">';
+
+jest.spyOn(window, 'alert').mockImplementation(() => {});
+const plnField = document.getElementById('pln-field');
+const gbpField = document.getElementById('gbp-field');
+
 const { calculateValue, isCorrectData }  = require('../script');
 
-document.body.innerHTML = 
-  "<input min=\"0\" step=\"0.01\" id=\"gbp-field\">" +
-  "<input min=\"0\" step=\"0.01\" id=\"pln-field\">";
-
-const gbpField = document.getElementById('gbp-field');
-const plnField = document.getElementById('pln-field');
-  
-jest.spyOn(window, 'alert').mockImplementation(() => {});
 
 describe('validateData test', () => {
   it('validate string containing only letters', () => {
